@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>当 AI 让人“脑炸”：智能体工作流的认知代价</title>
+  <meta name="description" content="根据 Harvard Business Review 文章整理的中文结构化转述，关注 AI 脑炸、认知过载、决策疲劳与组织管理。">
+  <style>
+    :root {
+      --bg: #faf8f3;
+      --paper: #fffdf8;
+      --ink: #20242a;
+      --muted: #667085;
+      --line: #e7dfd2;
+      --soft: #f1ece3;
+      --red: #b42318;
+      --red-dark: #7a271a;
+      --blue: #243b53;
+      --green: #2f6b4f;
+      --shadow: 0 18px 50px rgba(32, 36, 42, .10);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(180,35,24,.06), transparent 340px),
+        var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .progress {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 3px;
+      z-index: 80;
+      background: transparent;
+    }
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--red);
+      transition: width .08s linear;
+    }
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 58px 28px 28px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--red-dark);
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--red);
+    }
+    h1 {
+      max-width: 900px;
+      margin: 0;
+      font-size: clamp(38px, 6vw, 72px);
+      line-height: 1.08;
+      font-weight: 800;
+      color: #15191f;
+    }
+    .subtitle {
+      max-width: 860px;
+      margin: 22px 0 0;
+      color: #3d4653;
+      font-size: 20px;
+      line-height: 1.7;
+    }
+    .meta {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .meta span {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.64);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+    .hero-note {
+      max-width: 860px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .stat-grid {
+      max-width: 1180px;
+      margin: 22px auto 36px;
+      padding: 0 28px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .stat-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      min-height: 138px;
+      box-shadow: 0 12px 32px rgba(32,36,42,.06);
+    }
+    .stat-card strong {
+      display: block;
+      color: var(--red);
+      font-size: 34px;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .stat-card span {
+      display: block;
+      color: #394150;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    .layout {
+      max-width: 1180px;
+      margin: 0 auto 72px;
+      padding: 0 28px;
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 42px;
+      align-items: start;
+    }
+    .sidebar {
+      position: sticky;
+      top: 22px;
+      max-height: calc(100vh - 44px);
+      overflow: auto;
+      background: rgba(255,253,248,.86);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: 0 10px 28px rgba(32,36,42,.07);
+      backdrop-filter: blur(12px);
+    }
+    .tool-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .searchbox {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .searchbox input {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 6px;
+      padding: 10px 11px;
+      font: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+    .searchbox input:focus {
+      border-color: rgba(180,35,24,.6);
+      box-shadow: 0 0 0 3px rgba(180,35,24,.10);
+    }
+    .search-actions {
+      display: grid;
+      grid-template-columns: 1fr 34px 34px;
+      gap: 6px;
+      align-items: center;
+    }
+    .count {
+      color: var(--muted);
+      font-size: 12px;
+      min-height: 22px;
+    }
+    button {
+      font: inherit;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .icon-btn {
+      height: 34px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+    .nav {
+      display: grid;
+      gap: 3px;
+    }
+    .nav-link {
+      color: #354054;
+      text-decoration: none;
+      border-radius: 6px;
+      padding: 8px 9px;
+      font-size: 14px;
+      line-height: 1.35;
+      border-left: 3px solid transparent;
+    }
+    .nav-link.sub {
+      padding-left: 18px;
+      color: #5c6678;
+      font-size: 13px;
+    }
+    .nav-link:hover,
+    .nav-link.active {
+      background: #f5eee6;
+      border-left-color: var(--red);
+      color: var(--red-dark);
+    }
+    main.article {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 42px min(6vw, 64px);
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+    .article-section {
+      scroll-margin-top: 42px;
+      margin-top: 52px;
+    }
+    .article-section:first-child {
+      margin-top: 0;
+    }
+    h2 {
+      margin: 0 0 18px;
+      font-size: 30px;
+      line-height: 1.28;
+      color: #17202a;
+    }
+    h3 {
+      scroll-margin-top: 42px;
+      margin: 34px 0 12px;
+      font-size: 22px;
+      line-height: 1.35;
+      color: var(--blue);
+    }
+    p {
+      margin: 0 0 18px;
+      font-size: 18px;
+    }
+    ul {
+      margin: 0 0 22px;
+      padding-left: 1.2em;
+    }
+    li {
+      margin: 8px 0;
+      font-size: 17px;
+    }
+    em { color: #364152; }
+    .article a {
+      color: var(--red-dark);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+    .article a:hover {
+      color: var(--red);
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      background: #f3eee6;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: .92em;
+    }
+    mark.search-hit {
+      background: #ffe08a;
+      color: inherit;
+      padding: 0 2px;
+      border-radius: 3px;
+    }
+    mark.search-hit.current {
+      background: #ffb84d;
+      outline: 2px solid rgba(180,35,24,.45);
+    }
+    .insight {
+      margin: 30px 0;
+      border: 1px solid var(--line);
+      background: #fbf5ed;
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+    .insight h3 {
+      margin-top: 0;
+      color: var(--red-dark);
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .flow-item {
+      min-height: 96px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px 12px;
+      position: relative;
+    }
+    .flow-item:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -15px;
+      top: 34px;
+      color: var(--red);
+      font-weight: 800;
+      z-index: 2;
+    }
+    .flow-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--blue);
+    }
+    .flow-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .curve {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      align-items: end;
+      min-height: 210px;
+      padding: 18px 8px 6px;
+    }
+    .bar {
+      display: grid;
+      gap: 8px;
+      align-items: end;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .bar i {
+      display: block;
+      width: 100%;
+      border-radius: 6px 6px 2px 2px;
+      background: linear-gradient(180deg, #b42318, #e17f6f);
+      border: 1px solid rgba(122,39,26,.22);
+    }
+    .bar:nth-child(1) i { height: 58px; opacity: .72; }
+    .bar:nth-child(2) i { height: 122px; }
+    .bar:nth-child(3) i { height: 154px; }
+    .bar:nth-child(4) i { height: 96px; opacity: .82; }
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .compare-card {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .compare-card h4 {
+      margin: 0 0 8px;
+      color: var(--blue);
+      font-size: 18px;
+    }
+    .compare-card p {
+      margin: 0;
+      font-size: 15px;
+      color: #4b5565;
+    }
+    .layers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .layer {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .layer strong {
+      display: block;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+    .layer span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .float-actions {
+      position: fixed;
+      right: 18px;
+      bottom: calc(env(safe-area-inset-bottom) + 18px);
+      z-index: 70;
+      display: grid;
+      gap: 10px;
+    }
+    .fab {
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fffdf8;
+      box-shadow: 0 10px 24px rgba(32,36,42,.14);
+      display: grid;
+      place-items: center;
+      color: var(--red-dark);
+      font-weight: 800;
+    }
+    .mobile-menu {
+      display: none;
+    }
+    .sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20,25,31,.32);
+      z-index: 89;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+    .bottom-sheet {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 90;
+      max-height: 65vh;
+      transform: translateY(102%);
+      transition: transform .22s ease;
+      background: var(--paper);
+      border-radius: 12px 12px 0 0;
+      border: 1px solid var(--line);
+      box-shadow: 0 -18px 45px rgba(32,36,42,.18);
+      padding: 14px 16px calc(env(safe-area-inset-bottom) + 16px);
+      overflow: auto;
+    }
+    .bottom-sheet.open {
+      transform: translateY(0);
+    }
+    .sheet-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .sheet-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .sheet-head strong {
+      font-size: 16px;
+    }
+    .close-sheet {
+      padding: 7px 10px;
+      font-size: 14px;
+    }
+    @media (max-width: 960px) {
+      .hero {
+        padding: 42px 18px 16px;
+      }
+      .subtitle {
+        font-size: 17px;
+      }
+      .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 18px;
+      }
+      .layout {
+        display: block;
+        padding: 0 14px;
+      }
+      .sidebar {
+        display: none;
+      }
+      main.article {
+        padding: 28px 18px;
+      }
+      p {
+        font-size: 16.5px;
+      }
+      h2 {
+        font-size: 25px;
+      }
+      h3 {
+        font-size: 20px;
+      }
+      .flow,
+      .layers,
+      .compare {
+        grid-template-columns: 1fr;
+      }
+      .flow-item:not(:last-child)::after {
+        content: "↓";
+        right: 18px;
+        top: auto;
+        bottom: -20px;
+      }
+      .mobile-menu {
+        display: grid;
+      }
+    }
+    @media (max-width: 520px) {
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+      .stat-card {
+        min-height: auto;
+      }
+      .curve {
+        gap: 8px;
+      }
+      .float-actions {
+        right: 12px;
+      }
+    }
+    @media print {
+      .sidebar, .float-actions, .progress, .sheet-backdrop, .bottom-sheet {
+        display: none !important;
+      }
+      body { background: #fff; }
+      main.article {
+        box-shadow: none;
+        border: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+  <header class="hero">
+    <div class="eyebrow">生成式 AI / HBR 中文整理</div>
+    <h1>当 AI 让人“脑炸”：智能体工作流的认知代价</h1>
+    <p class="subtitle">一项针对 1,488 名美国全职员工的研究显示，AI 不一定让工作变轻松。密集监督智能体、频繁切换工具和隐性增加工作量，可能带来精神疲劳、决策疲劳、错误增加和主动离职意向上升。</p>
+    <div class="meta">
+      <span>原文：When Using AI Leads to “Brain Fry”</span>
+      <span>Harvard Business Review</span>
+      <span>2026 年 3 月 5 日</span>
+      <span>中文结构化转述</span>
+    </div>
+    <p class="hero-note">本文根据原文整理、翻译与结构化转述，保留主要研究发现、案例、数据和管理建议，供中文读者学习参考；非 HBR 官方译文。</p>
+  </header>
+
+  <section class="stat-grid" aria-label="核心数据">
+    <div class="stat-card"><strong>1,488</strong><span>研究覆盖的美国全职员工样本，来自大型企业的不同行业、岗位和层级。</span></div>
+    <div class="stat-card"><strong>14%</strong><span>使用 AI 工作的参与者认可自己经历过“AI 脑炸”。</span></div>
+    <div class="stat-card"><strong>33%</strong><span>经历 AI 脑炸的员工，决策疲劳比没有经历者更高。</span></div>
+    <div class="stat-card"><strong>39%</strong><span>经历 AI 脑炸的员工，重大错误发生频率更高；主动离职意向也明显上升。</span></div>
+  </section>
+
+  <div class="layout">
+    <aside class="sidebar" aria-label="阅读工具">
+      <p class="tool-title">搜索正文</p>
+      <div class="searchbox">
+        <input id="searchInput" type="search" placeholder="输入关键词，例如：监督、倦怠、离职意向" autocomplete="off">
+        <div class="search-actions">
+          <span id="searchCount" class="count"></span>
+          <button class="icon-btn" id="prevHit" type="button" title="上一个匹配">↑</button>
+          <button class="icon-btn" id="nextHit" type="button" title="下一个匹配">↓</button>
+        </div>
+      </div>
+      <p class="tool-title">快速跳转</p>
+      <nav class="nav" id="desktopNav"><a class="nav-link" href="#summary" data-target="summary">摘要</a>
+<a class="nav-link" href="#ai-fatigue" data-target="ai-fatigue">AI 使用与疲劳</a>
+<a class="nav-link" href="#brain-fry" data-target="brain-fry">什么是 AI 脑炸</a>
+<a class="nav-link" href="#business-cost" data-target="business-cost">商业成本</a>
+<a class="nav-link" href="#less-toil" data-target="less-toil">低价值苦活</a>
+<a class="nav-link" href="#practices" data-target="practices">组织实践</a>
+<a class="nav-link" href="#leader-lessons" data-target="leader-lessons">领导者建议</a>
+<a class="nav-link sub" href="#redesign-work" data-target="redesign-work">从整体上重新设计岗位、工作和工具，以承担人类 + AI 的责任</a>
+<a class="nav-link sub" href="#expectations" data-target="expectations">明确设定关于 AI 和工作量的预期</a>
+<a class="nav-link sub" href="#metrics" data-target="metrics">将指标从活动量和强度转向影响</a>
+<a class="nav-link sub" href="#skills" data-target="skills">培养员工管理 AI 工作量的相关技能</a>
+<a class="nav-link sub" href="#attention" data-target="attention">将人类注意力作为有限资源进行战略性部署</a>
+<a class="nav-link" href="#resources" data-target="resources">更多资源</a>
+<a class="nav-link" href="#authors" data-target="authors">作者简介</a></nav>
+    </aside>
+
+    <main class="article" id="article">
+      <div class="insight">
+        <h3>快速读法</h3>
+        <p>这篇文章最重要的不是“AI 会不会让人累”，而是区分两种完全不同的 AI 使用方式：一种是让 AI 接手低价值重复工作，从而减少倦怠；另一种是让人同时监督更多工具和输出，从而制造认知过载。</p>
+      </div>
+
+      <div class="insight" aria-label="AI 脑炸路径图">
+        <h3>AI 脑炸路径图</h3>
+        <div class="flow">
+          <div class="flow-item"><strong>工具增多</strong><span>搜索、研究、数据、图像、编程等工具同时运行。</span></div>
+          <div class="flow-item"><strong>监督增加</strong><span>人需要持续检查、切换、判断和纠偏。</span></div>
+          <div class="flow-item"><strong>信息过载</strong><span>输出变多，责任范围扩大，注意力被拉满。</span></div>
+          <div class="flow-item"><strong>决策疲劳</strong><span>高质量判断所需的心理资源被持续消耗。</span></div>
+          <div class="flow-item"><strong>错误与离职意向</strong><span>错误增加，主动离职意向上升。</span></div>
+        </div>
+      </div>
+
+      <div class="insight" aria-label="工具数量与生产力拐点">
+        <h3>工具数量与生产力拐点</h3>
+        <div class="curve">
+          <div class="bar"><i></i><span>1 个工具<br>基础提升</span></div>
+          <div class="bar"><i></i><span>2 个工具<br>明显提升</span></div>
+          <div class="bar"><i></i><span>3 个工具<br>继续提升但放缓</span></div>
+          <div class="bar"><i></i><span>超过 3 个<br>感知生产力下降</span></div>
+        </div>
+      </div>
+
+      <div class="insight" aria-label="倦怠与 AI 脑炸对比">
+        <h3>倦怠 vs AI 脑炸</h3>
+        <div class="compare">
+          <div class="compare-card"><h4>倦怠</h4><p>更偏长期的情绪和身体耗竭，常与乏味、重复、缺少恢复感的工作有关。AI 接手低价值重复任务时，可能帮助降低倦怠。</p></div>
+          <div class="compare-card"><h4>AI 脑炸</h4><p>更偏急性的认知过载，来自注意力、工作记忆和执行控制被过度调用。密集监督 AI 工具时，风险会明显上升。</p></div>
+        </div>
+      </div>
+
+      <p>原文：<em>When Using AI Leads to “Brain Fry”</em> 类别：生成式 AI 作者：Julie Bedard、Matthew Kropp、Megan Hsu、Olivia T. Karaman、Jason Hawes、Gabriella Rosen Kellerman 发布日期：2026 年 3 月 5 日 图片来源：HBR Staff / Runstudio / Getty Images</p>
+<section id="summary" class="article-section" data-section-title="摘要">
+<h2>摘要</h2>
+<p>随着企业越来越鼓励员工搭建并监督复杂的智能体团队，例如把 token 消耗量当作衡量绩效的间接指标，越来越多人发现，自己的认知能力正在被推到极限。</p>
+<p>元旦当天，程序员 Steve Yegge 发布了 Gas Town。它是一个开源平台，允许用户同时编排成群的 Claude Code 智能体，以极快速度组装软件。结果令人印象深刻，但也让人眼花缭乱。一位早期用户写道：“事情实在太多了，多到你几乎不可能合理理解。”他还说：“看着它运行，我能明显感到压力。Gas Town 对我来说推进得太快了。”</p>
+<p>Gas Town 展现了一种日益明显的矛盾：AI 原本被期待成为能力放大器，提升效率、让工作更轻松；但不少使用 AI 工具的员工却发现，工作并没有被简化，反而变得更紧绷、更密集。</p>
+<p>这个问题正变得越来越普遍。企业正在激励员工搭建并监督复杂的智能体团队，例如把 token 消耗量当作衡量绩效的间接指标。Meta 就把 AI 生成的代码行数纳入工程师绩效指标之一。随着企业使用更多多智能体系统，员工发现自己需要在更多工具之间来回切换。AI 原本承诺让人有更多时间专注于有意义的工作，但在实际场景中，来回切换工具和多任务处理，反而可能成为 AI 工作方式的主要特征。</p>
+<p>毫不意外，员工在这种工作方式下正撞上自身认知能力的边界。最近几周，网上的 AI 用户在社交媒体帖子中描述了认知负荷增加、注意力“饱和”和精神疲劳。Cua AI 创始人工程师 Francesco Bonacci 曾发布一条广为传播的 X 帖子，标题是“氛围编程瘫痪：无限生产力如何击垮你的大脑”。他感叹道：“我每天结束时都筋疲力尽，不是因为工作本身，而是因为管理这些工作。六个 worktree 开着，四个功能写到一半，两个‘快速修复’又衍生出更深的坑，还有一种越来越强烈的感觉：我完全搞不清主线了。”</p>
+<p>作为一个研究新兴劳动力和 AI 趋势的团队，这些信号引起了我们的注意。关于 AI 与员工倦怠之间关系的研究文献，给出了不少相互矛盾的结果。倦怠是一种长期职场压力状态，通常包括疲惫、对工作的负面感受，以及工作效能下降。一些研究表明，用 AI 替代令人疲惫的任务可以缓解耗竭；另一些研究，有时甚至研究的是同一类人群，却显示 AI 使用会恶化倦怠结果。密集监督 AI 带来的急性、压倒性的精神疲劳，作为一种不同于倦怠的现象，让这幅图景变得更加复杂。</p>
+<p>为了理解正在发生什么，我们对 1,488 名美国全职员工进行了研究。他们来自不同行业、职位和层级的大型企业，其中 48% 为男性、51% 为女性；58% 为非管理岗员工、41% 为管理者。我们询问了他们使用 AI 的方式和频率、工作体验，以及认知和情绪状态。</p>
+<p>我们发现，帖子中描述的现象，也就是密集监督 AI 智能体造成的认知耗竭，是真实且显著的。我们将其称为“AI 脑炸”（更准确地说，是 AI 脑过载；原文为 AI brain fry），指的是：由于过度使用或监督 AI 工具，超出个人认知容量而产生的精神疲劳。参与者描述了一种脑内嗡鸣或脑雾般的状态：难以集中注意力、决策变慢、头痛。这种与 AI 相关的精神压力会带来显著成本，包括员工错误增多、决策疲劳增加，以及主动离职意向上升。</p>
+<p>不过，这里也有一些细微差别。我们还发现，当 AI 被用来替代常规或重复性任务时，倦怠得分较低，但精神疲劳得分并不会因此降低。这凸显了一个细微但重要的区别：AI 可以缓解某些类型的压力，也可能加剧另一些类型的压力。</p>
+<p>我们的发现既是一份指南，也是一则警示。如果使用得当，这些数据可以帮助组织设计由 AI 驱动的工作流程，以降低倦怠。同时，它们也指向了一些具体的管理者、团队和组织实践，可以在 AI 工作强度提升的同时避免精神疲劳。</p>
+</section>
+<section id="ai-fatigue" class="article-section" data-section-title="当 AI 使用预示精神疲劳">
+<h2>当 AI 使用预示精神疲劳</h2>
+<p>今天，员工使用 AI 的方式差异极大。差异体现在同时使用多少工具、AI 是接手原有任务还是帮助人把任务做得更好、需要多少人工监督，以及 AI 到底增加还是减少了总体工作量。他们可能会使用搜索智能体、研究智能体、数据分析工具、图像生成或设计工具，或编程智能体。为了理解不同类型的 AI 使用对心理造成的影响，我们考察了这些不同使用方式，并结合了认知测量。</p>
+<p>我们得到了几个重要发现。</p>
+<p>第一，我们发现最耗费心智的 AI 使用方式是监督，也就是员工需要在多大程度上直接盯着 AI 工具的运行。在我们的研究中，相比只需要低度监督 AI 的员工，那些需要高度监督 AI 的员工，在工作中付出的脑力努力多出 14%。高度 AI 监督还对应着精神疲劳程度增加 12%。最后，更密集的 AI 监督也对应着信息过载增加 19%，也就是员工更容易被工作中必须处理的信息量压倒。</p>
+<p>第二个与 AI 相关、能够预测认知负荷和精神疲劳的重要因素，是员工认为 AI 工具在多大程度上增加了自己的工作量。AI 监督和工作量增加这两个因素，会共同扩大员工的责任范围，要求他们在同样时间内关注更多工具、更多结果。认知负荷因此上升，并伴随精神耗竭，这并不难理解。</p>
+<p>我们还发现，同时使用的 AI 工具数量，与人们感受到的生产力提升之间存在一种有趣关系。当员工从同时使用一个 AI 工具增加到两个时，他们会明显感觉生产力上升。加入第三个工具后，生产力仍会提升，但幅度变小。然而，超过三个工具之后，人们感受到的生产力开始下降。多任务处理出了名地低效，但我们仍一次又一次被它吸引。</p>
+<p>虽然 AI 使用经常与精神疲劳有关，但它似乎并不一定带来更高的倦怠。事实上，用 AI 接手重复性任务，反而与较低的倦怠水平有关。</p>
+<p>这看起来可能有些违反直觉，但背后有其逻辑。既有研究早已把倦怠与急性认知问题区分开来。倦怠测量通常关注身体和情绪层面的痛苦，例如“你的工作在情绪上是否令人筋疲力尽？”而急性精神疲劳，则来自注意力、工作记忆和执行控制被调用到超出承受范围的程度。这恰恰是密集 AI 监督最容易触发的状态。</p>
+</section>
+<section id="brain-fry" class="article-section" data-section-title="什么是“AI 脑炸”">
+<h2>什么是“AI 脑炸”</h2>
+<p>在研究最后，我们询问参与者，他们是否曾经历过“由于过度使用、互动和/或监督 AI 工具，超出个人认知容量而导致的精神疲劳”。换句话说，就是 AI 脑炸。我们把这个问题放在最后，是为了避免前面的问题诱导他们往这个方向回答；此前所有条目都将 AI 使用与我们关注的结果分开询问。在使用 AI 工作的参与者中，14% 认可自己经历过 AI 脑炸。</p>
+<p>AI 脑炸的发生率似乎因岗位而存在很大差异。在较低的一端，只有 6% 的法律岗位人员报告经历过这一现象；而在较高的一端，市场营销岗位人员的比例达到 26%。在市场营销之后，人才运营、运营、工程、财务和 IT 是 AI 脑炸发生率最高的职能。</p>
+<p>那么，AI 脑炸究竟是什么？许多参与者用了“脑雾”“脑子嗡嗡响”这样的说法。他们描述的是，在与工具进行高频来回互动之后，出现一种无法清晰思考的状态，像精神宿醉一样：难以集中注意力、决策变慢、头痛。有些人甚至需要离开电脑，才能让自己“重置”。</p>
+<p>请看一位高级工程经理的描述：“我让一个工具帮我权衡技术决策，另一个工具生成草稿和摘要，而我一直在它们之间来回跳转，反复核对每一个小细节。但我并没有更快推进，反而觉得大脑越来越杂乱。不是身体上的累，而是……很拥挤。就好像我脑子里打开了十几个浏览器标签页，每一个都在争夺注意力。我发现自己反复读同样的内容，比平时更频繁地怀疑自己的判断，还变得莫名其妙地不耐烦。我的思考没有坏掉，只是变得很吵，像精神上的静电。真正让我清醒过来的，是意识到自己花在管理工具上的力气，比花在真正解决问题上的还多。”</p>
+<p>一位财务总监写道：“我一直在和 AI 来回沟通，让它改写想法、综合数据、形成并组织几个核心支柱和工作流程……到后来我甚至无法判断……自己做出来的东西到底有没有意义……什么也做不了了，只能第二天再回来看，那时我才重新能思考。”</p>
+<p>这两段描述代表了我们从其他参与者那里听到的内容。从定性角度看，它们指向信息过载和任务切换是 AI 脑炸的重要因素。从定量角度看，我们发现 AI 脑炸与信息过载之间存在强相关，但它与任务切换相关条目之间的关系没有那么直接。</p>
+</section>
+<section id="business-cost" class="article-section" data-section-title="AI 脑炸的商业成本">
+<h2>AI 脑炸的商业成本</h2>
+<p>AI 脑炸不仅仅令人不适。我们的数据表明，密集 AI 使用所造成的认知压力，还会带来几项非常重要的商业成本。</p>
+<p>第一项是决策疲劳。或许并不令人意外，当我们的大脑被高强度 AI 工作的认知负荷耗尽时，用于做出高质量决策的心理资源就会减少。在我们的研究中，认可自己经历过 AI 脑炸的员工，其决策疲劳比没有经历者高出 33%。</p>
+<p>一项 2018 年研究估算，对于一家年收入 50 亿美元的公司，次优决策每年造成的成本为 1.5 亿美元。员工决策疲劳增加 33%，可能会让这一成本每年再增加数百万美元。</p>
+<p>很可能出于类似机制，我们发现，AI 脑炸与员工自我报告的重大和轻微工作错误之间存在稳定关系。我们将轻微错误定义为“容易发现或纠正的小错误，例如代码或格式错误”；将重大错误定义为“后果更严重的错误，例如可能影响安全、结果或重要决策的错误”。在使用 AI 工作的参与者中，经历脑炸的人报告犯错的频率显著更高：轻微错误和重大错误的发生频率分别比没有经历者高 11% 和 39%。</p>
+<p>在许多情况下，今天高强度使用 AI 的员工正是公司的明星人才，是企业必须留住的人才。然而，AI 脑炸与更高的主动离职意向相关。在未报告 AI 脑炸的员工中，25% 表现出主动离职意向；在报告经历 AI 脑炸的员工中，这一比例上升到 34%。这意味着，在 AI 重度用户中，主动离职意向增加了 39%。</p>
+</section>
+<section id="less-toil" class="article-section" data-section-title="少一些低价值苦活，少一些倦怠">
+<h2>少一些低价值苦活，少一些倦怠</h2>
+<p>不过，并不是每一种 AI 使用都会导致脑炸。我们同样关心 AI 可能如何缓解员工压力。我们发现，当参与者使用 AI 大幅减少花在常规或重复性任务上的时间时，他们报告的倦怠水平显著更低，比不以这种方式使用 AI 的人低 15%。</p>
+<p>同样，这背后也有直观逻辑。重复、乏味、低价值的事务性工作，也就是我们的同事所说的 toil，是 AI 使用的理想目标。如果我们能把这类令人不快的工作交给 AI，就会有更多时间投入更愉悦、更有创造性的任务。我们研究中的这些员工似乎正是这样做的：他们报告了更高的工作投入和动机得分；与 AI 相关的正面情绪联想更多；与 AI 相关的负面情绪联想更少。这些参与者还报告了与同事更高程度的社会连接，也许是因为他们有更多时间离开键盘。</p>
+<p>这一组发现进一步强化了倦怠与 AI 脑炸之间的区别：前者更像是一种由情绪驱动的亏空，后者则是一种更急性的认知压力。当 AI 接手一部分任务，并为我们腾出时间去做更能恢复状态、更有正反馈的工作时，它可以帮助缓解情绪耗竭。相反，当我们使用 AI 需要高强度的心理监督时，我们的研究表明，AI 工具的使用本身可能正在造成精神耗竭。</p>
+</section>
+<section id="practices" class="article-section" data-section-title="管理者、团队和组织实践如何产生差异">
+<h2>管理者、团队和组织实践如何产生差异</h2>
+<p>员工对 AI 的体验并不只是个人选择的问题。我们发现，团队、管理者和组织实践具有重大影响。但对于 AI 相关精神疲劳，哪些做法最重要？</p>
+<p>在管理者层面，如果管理者愿意花时间回答员工关于 AI 的问题，员工的精神疲劳程度比那些得不到这种支持的员工低 15%。相反，当管理者期望员工自行摸索如何使用 AI 时，其下属的精神疲劳程度高 5%。这是一种虽小但可衡量的自行摸索成本。</p>
+<p>在团队层面，当员工感到团队有使用 AI 的压力时，我们会看到精神疲劳相应增加。当团队内部 AI 使用差异很大时，我们也观察到了同样关系。另一方面，当团队有意识地把 AI 嵌入日常流程时，团队成员会体验到显著更少的精神压力。这种整合可能意味着，团队正在共同消除重复性任务。群体规范既可以帮助人们形成更健康的 AI 协作方式，也可能制造负面压力。</p>
+<p>在组织层面，从方向上看，提供清晰 AI 战略和培训等做法似乎有所帮助。相反，当公司没有清楚沟通 AI 的角色时，精神疲劳得分更高。同样，当员工感到组织会因为 AI 而期望他们完成更多工作时，精神疲劳得分高出 12%。</p>
+<p>这是一个关键发现，因为大多数组织关于工作量与 AI 关系的信息都是隐性的，而非显性的。例如，提到 AI 带来的生产力提升，可能被理解为工作强度提高。类似地，把非管理岗员工称为智能体的“管理者”，也会间接暗示他们的责任层级上升。</p>
+<p>在这种背景下，组织越来越有必要在传递 AI 提升效率的信息时，同时明确表达对员工心理健康的重视。在我们的研究中，认为组织重视工作与生活平衡的员工，其精神疲劳程度比其他人低 28%。这些信号也很重要，而且极其重要。</p>
+</section>
+<section id="leader-lessons" class="article-section" data-section-title="给领导者的经验">
+<h2>给领导者的经验</h2>
+<p>AI 可以帮助员工更快工作、拓展思考，并推动更多创新。但在这个过程中，我们也看到，它可能造成认知过载，并带来个人和商业层面的后果。我们的发现表明，关键差异不在于个人使用了多少 AI，而在于员工、团队、领导者和组织如何塑造 AI 的使用方式。以下是给领导者的一些经验。</p>
+<h3 id="redesign-work">从整体上重新设计岗位、工作和工具，以承担人类 + AI 的责任</h3>
+<p>AI 监督不能简单叠加在人类原本的监督职责之上；AI 智能体也不能无限叠加到一个用户身上。正如管理人类团队需要考虑管理幅度一样，对于人类 + 智能体的监督，以及智能体之间的监督，也需要定义边界。我们的研究表明，同时使用超过三个 AI 智能体之后，生产力收益会开始转负。</p>
+<p>相比之下，当团队将 AI 深度嵌入工作流程，并把技术视为一种集体能力，而不是个人之间拉开差距的工具时，认知负担会降低。此外，设计新 AI 工具的人也应当把人的神经认知特点纳入考虑。那些不需要持续占用注意力和工作记忆，反而能支持创造性发散、促进社交参与或支撑技能发展的工具，可以更可持续地产生商业价值，同时鼓励创新、促进成长，并让用户更愿意使用。</p>
+<h3 id="expectations">明确设定关于 AI 和工作量的预期</h3>
+<p>当组织庆祝“生产力提升”，却没有澄清这对工作量意味着什么时，员工会把它理解为工作强度提高。单是这种模糊性就可能增加压力。领导者如果清楚定义 AI 在组织中的目的，说明它如何重塑岗位范围，围绕监督设定指导，并澄清工作量将如何变化，就能降低压力。AI 转型工作的整整 70% 应该投入到人员和流程上，为员工提供真正有用的清晰度。</p>
+<h3 id="metrics">将指标从活动量和强度转向影响</h3>
+<p>激励使用数量会导致浪费、低质量工作和不必要的精神压力。组织应该先明确一个清晰的核心业务目标，再为它设定可衡量的结果。对效率创新的回应要谨慎。不要急于把一位聪明员工刚刚自动化掉的工作重新填满；如果立刻这样做，会让人感觉像是一种惩罚，并抑制进一步创新。</p>
+<h3 id="skills">培养员工管理 AI 工作量的相关技能</h3>
+<p>正如前文那位高级工程经理所说，有些人“花在管理工具上的力气，比花在真正解决问题上的还多”。在我们与软件开发者合作的过程中，我们发现，最擅长使用 AI 的人，如果不能发展出问题界定、分析规划和战略优先级排序等关键新技能，就会开始觉得进展受阻。可以通过员工技能提升来建立这些能力，从而减少大量新的、不必要的 AI 工作。一个员工能够以很低的边际成本持续与 AI 迭代，并不意味着他就应该这样做。</p>
+<h3 id="attention">将人类注意力作为有限资源进行战略性部署</h3>
+<p>今天一些最有价值的人类技能，包括辨别力、决策能力和战略规划，都需要集中注意力。虽然倦怠已成为许多职场中的关注点，但精神疲劳更可能在现有员工调查中被忽视。组织应当发展人力分析指标，整体监测认知负荷，并把 AI 使用中的精神疲劳作为一种新的工作相关风险加以防范。那些优先帮助员工保持清醒、高效认知状态的文化、团队和领导者，可以预期看到更好的判断、更少的错误，以及更高的顶尖人才留存率。</p>
+<p>AI 脑炸揭示了一个事实：新工具在我们使用它们时，可以多么迅速而有力地影响我们的大脑。接下来，我们必须学会如何把同样的力量用于对人和企业都有益的结果。</p>
+<p>作者感谢 Caitlyn Jin、Venessa Arellano 和 Blake Elliott 对本研究的帮助。</p>
+</section>
+<section id="resources" class="article-section" data-section-title="更多资源">
+<h2>更多资源</h2>
+<ul>
+<li><a href="https://hbr.org/2026/02/ai-doesnt-reduce-work-it-intensifies-it" target="_blank" rel="noopener noreferrer">AI Doesn’t Reduce Work - It Intensifies It</a></li>
+<li><a href="https://hbr.org/2022/08/how-much-time-and-energy-do-we-waste-toggling-between-applications" target="_blank" rel="noopener noreferrer">How Much Time and Energy Do We Waste Toggling Between Applications?</a></li>
+<li><a href="https://hbr.org/2025/09/ai-generated-workslop-is-destroying-productivity" target="_blank" rel="noopener noreferrer">AI-Generated “Workslop” Is Destroying Productivity</a></li>
+<li><a href="https://hbr.org/2026/01/why-people-create-ai-workslop-and-how-to-stop-it" target="_blank" rel="noopener noreferrer">Why People Create AI “Workslop” - and How to Stop It</a></li>
+<li><a href="https://hbr.org/2025/04/how-people-are-really-using-gen-ai-in-2025" target="_blank" rel="noopener noreferrer">How People Are Really Using Gen AI in 2025</a></li>
+</ul>
+</section>
+<section id="authors" class="article-section" data-section-title="作者简介">
+<h2>作者简介</h2>
+<p>Julie Bedard 是波士顿咨询公司董事总经理兼合伙人，担任该公司全球 People &amp; Organization 与 AI 领导团队成员，同时也是 BCG Henderson Institute 研究员。她为各行业领导者提供 AI 战略和人员转型方面的建议。</p>
+<p>Matthew Kropp 是波士顿咨询公司董事总经理兼高级合伙人、BCG X 首席技术官，以及 BCG Henderson Institute 研究员。他的工作和研究聚焦于企业 AI 落地，以及塑造工作中智能体与人类之间的关系。</p>
+<p>Megan Hsu 是波士顿咨询公司项目负责人，也是 BCG Henderson Institute 大使。她的研究聚焦于 AI 和智能体如何重塑工作的本质与价值创造。</p>
+<p>Olivia T. Karaman 是加州大学河滨分校博士候选人，研究期待、等待、不确定性和情绪幸福感。她也是波士顿咨询公司的研究助理。</p>
+<p>Jason Hawes 是加州大学河滨分校博士候选人，研究不耐烦作为一种情绪，以及正念和心流在幸福感中的作用。他也是波士顿咨询公司的研究助理。</p>
+<p>Gabriella Rosen Kellerman 是波士顿咨询公司专家合伙人兼董事，并与 Martin Seligman 教授合著了 <em>Tomorrowmind</em>。Kellerman 受过精神科医生训练，研究重点是组织在不确定性中的表现，以及生成式 AI 时代的领导力。</p>
+<p>更多阅读主题：生成式 AI、AI 与机器学习、技术与分析、分析与数据科学、自动化。</p>
+</section>
+
+      <div class="insight" aria-label="组织干预三层模型">
+        <h3>组织干预三层模型</h3>
+        <div class="layers">
+          <div class="layer"><strong>管理者</strong><span>回答员工关于 AI 的问题，避免让员工完全自行摸索。</span></div>
+          <div class="layer"><strong>团队</strong><span>把 AI 有意识地嵌入流程，形成清晰协作规范，而不是制造使用压力。</span></div>
+          <div class="layer"><strong>组织</strong><span>明确 AI 战略、培训和工作量预期，同时传递对工作生活平衡的重视。</span></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="float-actions">
+    <button class="fab mobile-menu" id="openSheet" type="button" title="目录和搜索">☰</button>
+    <button class="fab" id="toTop" type="button" title="回到顶部">↑</button>
+  </div>
+
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+  <div class="bottom-sheet" id="bottomSheet" aria-label="移动端目录和搜索">
+    <div class="sheet-head">
+      <strong>目录 / 搜索</strong>
+      <button class="close-sheet" id="closeSheet" type="button">关闭</button>
+    </div>
+    <div class="searchbox">
+      <input id="mobileSearchInput" type="search" placeholder="搜索正文关键词" autocomplete="off">
+      <div class="search-actions">
+        <span id="mobileSearchCount" class="count"></span>
+        <button class="icon-btn" id="mobilePrevHit" type="button" title="上一个匹配">↑</button>
+        <button class="icon-btn" id="mobileNextHit" type="button" title="下一个匹配">↓</button>
+      </div>
+    </div>
+    <nav class="nav" id="mobileNav"><a class="nav-link" href="#summary" data-target="summary">摘要</a>
+<a class="nav-link" href="#ai-fatigue" data-target="ai-fatigue">AI 使用与疲劳</a>
+<a class="nav-link" href="#brain-fry" data-target="brain-fry">什么是 AI 脑炸</a>
+<a class="nav-link" href="#business-cost" data-target="business-cost">商业成本</a>
+<a class="nav-link" href="#less-toil" data-target="less-toil">低价值苦活</a>
+<a class="nav-link" href="#practices" data-target="practices">组织实践</a>
+<a class="nav-link" href="#leader-lessons" data-target="leader-lessons">领导者建议</a>
+<a class="nav-link sub" href="#redesign-work" data-target="redesign-work">从整体上重新设计岗位、工作和工具，以承担人类 + AI 的责任</a>
+<a class="nav-link sub" href="#expectations" data-target="expectations">明确设定关于 AI 和工作量的预期</a>
+<a class="nav-link sub" href="#metrics" data-target="metrics">将指标从活动量和强度转向影响</a>
+<a class="nav-link sub" href="#skills" data-target="skills">培养员工管理 AI 工作量的相关技能</a>
+<a class="nav-link sub" href="#attention" data-target="attention">将人类注意力作为有限资源进行战略性部署</a>
+<a class="nav-link" href="#resources" data-target="resources">更多资源</a>
+<a class="nav-link" href="#authors" data-target="authors">作者简介</a></nav>
+  </div>
+
+  <script>
+    const article = document.getElementById('article');
+    const progressBar = document.getElementById('progressBar');
+    const toTop = document.getElementById('toTop');
+    const sheet = document.getElementById('bottomSheet');
+    const backdrop = document.getElementById('sheetBackdrop');
+    const openSheet = document.getElementById('openSheet');
+    const closeSheet = document.getElementById('closeSheet');
+    const searchInput = document.getElementById('searchInput');
+    const mobileSearchInput = document.getElementById('mobileSearchInput');
+    const searchCount = document.getElementById('searchCount');
+    const mobileSearchCount = document.getElementById('mobileSearchCount');
+    let hits = [];
+    let hitIndex = -1;
+    let originalHTML = article.innerHTML;
+
+    function updateProgress() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? Math.min(100, Math.max(0, scrollTop / max * 100)) : 0;
+      progressBar.style.width = pct + '%';
+      toTop.style.display = scrollTop > 500 ? 'grid' : 'none';
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    function openBottomSheet() {
+      sheet.classList.add('open');
+      backdrop.classList.add('open');
+      setTimeout(() => mobileSearchInput.focus(), 120);
+    }
+    function closeBottomSheet() {
+      sheet.classList.remove('open');
+      backdrop.classList.remove('open');
+    }
+    openSheet.addEventListener('click', openBottomSheet);
+    closeSheet.addEventListener('click', closeBottomSheet);
+    backdrop.addEventListener('click', closeBottomSheet);
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', event => {
+        const id = link.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if (target) {
+          event.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          closeBottomSheet();
+        }
+      });
+    });
+
+    let sectionObserver;
+    function observeSections() {
+      if (sectionObserver) sectionObserver.disconnect();
+      sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            document.querySelectorAll('.nav-link').forEach(link => {
+              link.classList.toggle('active', link.dataset.target === id);
+            });
+          }
+        });
+      }, { rootMargin: '-30% 0px -62% 0px', threshold: 0 });
+      document.querySelectorAll('.article-section[id]').forEach(section => sectionObserver.observe(section));
+    }
+    observeSections();
+
+    function escapeRegExp(text) {
+      return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    function clearSearch() {
+      article.innerHTML = originalHTML;
+      hits = [];
+      hitIndex = -1;
+      updateSearchCounts('');
+    }
+    function updateSearchCounts(prefix) {
+      const text = hits.length ? `${hitIndex + 1} / ${hits.length}` : prefix;
+      searchCount.textContent = text;
+      mobileSearchCount.textContent = text;
+    }
+    function collectHits() {
+      hits = Array.from(article.querySelectorAll('mark.search-hit'));
+      hitIndex = hits.length ? 0 : -1;
+      if (hits.length) focusHit(0);
+      updateSearchCounts(hits.length ? '' : '无匹配');
+    }
+    function focusHit(index) {
+      if (!hits.length) return;
+      hits.forEach(hit => hit.classList.remove('current'));
+      hitIndex = (index + hits.length) % hits.length;
+      const hit = hits[hitIndex];
+      hit.classList.add('current');
+      hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      updateSearchCounts('');
+    }
+    function runSearch(value) {
+      const query = value.trim();
+      article.innerHTML = originalHTML;
+      if (!query) {
+        hits = [];
+        hitIndex = -1;
+        updateSearchCounts('');
+        observeSections();
+        return;
+      }
+      const pattern = new RegExp(escapeRegExp(query), 'gi');
+      const walker = document.createTreeWalker(article, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+          const parent = node.parentElement;
+          if (!parent || ['SCRIPT','STYLE','MARK'].includes(parent.tagName)) return NodeFilter.FILTER_REJECT;
+          return pattern.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+        }
+      });
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(node => {
+        const span = document.createElement('span');
+        span.innerHTML = htmlEscape(node.nodeValue).replace(pattern, match => `<mark class="search-hit">${match}</mark>`);
+        node.parentNode.replaceChild(span, node);
+      });
+      originalHTML = originalHTML;
+      collectHits();
+      observeSections();
+      if (window.matchMedia('(max-width: 960px)').matches && hits.length) closeBottomSheet();
+    }
+    function htmlEscape(value) {
+      return value.replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    }
+    function bindSearch(input) {
+      let timer;
+      input.addEventListener('input', () => {
+        clearTimeout(timer);
+        const value = input.value;
+        if (input === searchInput) mobileSearchInput.value = value;
+        if (input === mobileSearchInput) searchInput.value = value;
+        timer = setTimeout(() => runSearch(value), 160);
+      });
+    }
+    bindSearch(searchInput);
+    bindSearch(mobileSearchInput);
+    document.getElementById('nextHit').addEventListener('click', () => focusHit(hitIndex + 1));
+    document.getElementById('prevHit').addEventListener('click', () => focusHit(hitIndex - 1));
+    document.getElementById('mobileNextHit').addEventListener('click', () => focusHit(hitIndex + 1));
+    document.getElementById('mobilePrevHit').addEventListener('click', () => focusHit(hitIndex - 1));
+  </script>
+</body>
+</html>
