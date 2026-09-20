@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -19,31 +19,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Sync AiDASH external release
-        run: |
-          mkdir -p aidash
-          curl -L --fail --retry 3 "https://at.adobe.com/KoqyiAxOIIx3P03N" -o aidash/index.html
-          curl -L --fail --retry 3 "https://at.adobe.com/9FohJLCHCVF9F1Ks" -o "aidash/AiDASH_公司深度研究_麦格咨询_外发版_v1.7_2026-09-20.pdf"
-          test -s aidash/index.html
-          test -s "aidash/AiDASH_公司深度研究_麦格咨询_外发版_v1.7_2026-09-20.pdf"
-          grep -q "麦格咨询" aidash/index.html
-          grep -q "MIGR" aidash/index.html
-
-      - name: Persist release files
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add aidash/index.html "aidash/AiDASH_公司深度研究_麦格咨询_外发版_v1.7_2026-09-20.pdf"
-          if ! git diff --cached --quiet; then
-            git commit -m "Publish AiDASH MiGR external release v1.7"
-            git push
-          fi
-
       - name: Configure Pages
         uses: actions/configure-pages@v5
+
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
