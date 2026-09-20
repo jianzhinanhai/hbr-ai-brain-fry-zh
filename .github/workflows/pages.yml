@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -19,28 +19,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Sync AiDASH page
-        run: |
-          mkdir -p aidash
-          curl -L --fail --retry 3 "https://raw.githubusercontent.com/jianzhinanhai/AI-Study-PPT/main/aidash/index.html" -o aidash/index.html
-          test -s aidash/index.html
-          grep -q "AiDASH" aidash/index.html
-
-      - name: Persist AiDASH page
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add aidash/index.html
-          if ! git diff --cached --quiet; then
-            git commit -m "Publish AiDASH company deep dive"
-            git push
-          fi
-
       - name: Configure Pages
         uses: actions/configure-pages@v5
+
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
