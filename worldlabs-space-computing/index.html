@@ -163,3 +163,46 @@ footer{padding:34px 0 50px;color:#7c8b93;font-size:11px;border-top:1px solid var
         <path d="M230 152 H250 M463 152 H483 M696 152 H716 M929 152 H949" stroke="#7ba89b" stroke-width="2.5" stroke-dasharray="4 5"/>
       </svg>
       <div class="flow-caption">这条链路里，L1–L3 已经有公开案例；L4–L5 才是真正意义上世界模型开始进入太空系统的部分。</div>
+    </div>
+    <div class="case-grid" style="margin-top:18px">
+      <article class="panel case"><div class="logo">AE</div><h4>AlphaEarth Foundations</h4><p>把多源、多模态地球观测数据统一成紧凑地理空间嵌入，用机器可读方式表达“这个地方是什么、怎样变化”。</p><div class="status">已发布 / 地面端</div></article>
+      <article class="panel case"><div class="logo">PV</div><h4>Prithvi</h4><p>NASA / IBM 地理空间基础模型的压缩版本已被部署到两个在轨平台，验证基础模型上星。</p><div class="status">2026｜已在轨验证</div></article>
+      <article class="panel case"><div class="logo">Φ2</div><h4>ESA Φsat-2</h4><p>星上 AI 执行云筛选、灾害分析、船舶检测、图像压缩等任务，证明“可编程在轨 AI”正在形成。</p><div class="status">2025｜科学运行阶段</div></article>
+      <article class="panel case"><div class="logo">DT</div><h4>NASA 动态目标选择</h4><p>卫星在不到 90 秒内完成前视观测、在轨分析、判断和重新指向，证明感知—行动闭环可在轨运行。</p><div class="status">2025｜飞行验证</div></article>
+    </div>
+    <article class="panel thesis" style="margin-top:18px"><h3>长期价值不一定是“卫星算更多”，而可能是“持续维护机器可读的世界状态”。</h3><p>当多星、多传感器、星间网络和在轨 AI 逐步成熟，价值链可能从“影像/数据 → 分析结果”继续迁移到“状态 → 预测 → 决策 → 再观测”。</p><div class="formula"><span>现实世界</span><i>→</i><span>卫星持续观测</span><i>→</i><span>在轨理解</span><i>→</i><span>更新世界状态</span><i>→</i><span>模拟 / 预测</span><i>→</i><span>重新调度观测</span></div></article>
+  </section>
+
+  <section id="s6">
+    <div class="section-head"><div><div class="num">07 · NEXT MOVE</div><h2>最小可行验证：只回答一个问题</h2></div><p>不做宏大战略先行。用一个可证伪的技术问题决定是否值得继续投入。</p></div>
+    <div class="validation">
+      <article class="panel val-card"><span class="tag synth">建议</span><h3 style="font-size:25px;margin:10px 0">Atlas 能否用卫星稀疏多视角影像，重建“可测量”而不只是“看起来合理”的真实三维场景？</h3><p style="color:var(--muted);font-size:14px">样本选 10–20 个海外非敏感区域。输入多视角光学影像、轨道/姿态、相机参数、DEM 和可用于比对的三维基准；输出点云/三维场景并进行误差审计。</p><div class="metrics"><div class="metric"><b>几何误差</b><span>位置、深度、形变</span></div><div class="metric"><b>尺度准确性</b><span>绝对尺度是否可信</span></div><div class="metric"><b>场景完整度</b><span>已观测区域覆盖率</span></div><div class="metric"><b>幻觉率</b><span>未观测区域虚构程度</span></div><div class="metric"><b>计算时间</b><span>单场景端到端耗时</span></div><div class="metric"><b>单位成本</b><span>每平方公里/每场景成本</span></div></div></article>
+      <article class="panel val-card"><h3 style="font-size:20px;margin-top:0">Go / No-Go 逻辑</h3><div class="judgments"><div class="judgment"><b>若几何精度不够</b><p>把 World Labs 保留为创意/仿真工具，不纳入核心遥感智能链路。</p></div><div class="judgment"><b>若几何精度可接受、但成本高</b><p>只用于高价值局部区域，由地球基础模型先筛选再调用。</p></div><div class="judgment"><b>若精度与成本同时过关</b><p>进入第二阶段：多时相一致性、变化建模、行业场景和联合产品化。</p></div></div></article>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><div><div class="num">SOURCES</div><h2>关键公开来源</h2></div><p>优先采用公司、NASA、ESA、Google DeepMind、中国航天科技集团、国家航天局、国家网信办和美国 BIS 等一手来源。</p></div>
+    <article class="panel sources">
+      <ol>
+        <li><a href="https://www.worldlabs.ai/blog/atlas" target="_blank" rel="noreferrer">World Labs｜Atlas: A World Model for Spatial Intelligence（2026-09-01）</a></li>
+        <li><a href="https://www.worldlabs.ai/blog/taxonomy-of-world-models" target="_blank" rel="noreferrer">World Labs｜A Functional Taxonomy of World Models（渲染器 / 模拟器 / 规划器）</a></li>
+        <li><a href="https://www.worldlabs.ai/blog" target="_blank" rel="noreferrer">World Labs｜Research & Insights（含 Real-to-Sim、World API 等）</a></li>
+        <li><a href="https://www.worldlabs.ai/terms-of-service" target="_blank" rel="noreferrer">World Labs｜Terms of Service（用户内容、训练、API、出口控制）</a></li>
+        <li><a href="https://hai.stanford.edu/people/fei-fei-li" target="_blank" rel="noreferrer">Stanford HAI｜Fei-Fei Li 个人资料</a></li>
+        <li><a href="https://www.spacechina.com/n25/n2014789/n2014809/c4695935/content.html" target="_blank" rel="noreferrer">中国航天科技集团｜太空人工智能基础设施公开规划（2026-08）</a></li>
+        <li><a href="https://www.cresda.cn/zgzywxyyzx/tpxw/0916/20260916170208309836878_pc.html" target="_blank" rel="noreferrer">中国资源卫星应用中心｜地球基础模型、视觉基础模型与地球嵌入向量库（2026-09）</a></li>
+        <li><a href="https://deepmind.google/blog/alphaearth-foundations-helps-map-our-planet-in-unprecedented-detail/" target="_blank" rel="noreferrer">Google DeepMind｜AlphaEarth Foundations（2025-07）</a></li>
+        <li><a href="https://science.nasa.gov/science-research/ai-foundation-model-in-orbit/" target="_blank" rel="noreferrer">NASA｜Prithvi becomes first AI geospatial foundation model in orbit（2026-05）</a></li>
+        <li><a href="https://www.esa.int/Applications/Observing_the_Earth/FutureEO/Phsat-2/Phsat-2_begins_science_phase_for_AI_Earth_images" target="_blank" rel="noreferrer">ESA｜Φsat-2 begins science phase for AI Earth images（2025-07）</a></li>
+        <li><a href="https://www.nasa.gov/science-research/earth-science/how-nasa-is-testing-ai-to-make-earth-observing-satellites-smarter/" target="_blank" rel="noreferrer">NASA JPL｜Dynamic Targeting（动态目标选择，在轨 AI 自主决策）</a></li>
+        <li><a href="https://www.cnsa.gov.cn/n6758823/n6758839/c6827724/content.html" target="_blank" rel="noreferrer">国家航天局｜《国家民用卫星遥感数据国际合作管理暂行办法》</a></li>
+        <li><a href="https://www.cac.gov.cn/2025-06/27/c_1752652339765002.htm" target="_blank" rel="noreferrer">国家网信办｜《数据出境安全评估申报指南（第三版）》</a></li>
+        <li><a href="https://media.bis.gov/press-release/department-commerce-revises-license-review-policy-semiconductors-exported-china" target="_blank" rel="noreferrer">美国商务部 BIS｜2026 年对华先进半导体许可审查政策调整</a></li>
+      </ol>
+      <div class="note">情报等级：初级。本文将公开事实、综合判断与待验证假设分开；合作意愿、Atlas 对遥感数据的真实适配度、中国境内可用性和私有部署能力目前仍属于 Unknown（未知）。</div>
+    </article>
+  </section>
+</div></main>
+<footer><div class="wrap">Space Intelligence × Space Computing｜公开信息初级情报｜更新：2026-09-21｜仅用于技术与商业研判，不构成法律或合规意见。</div></footer>
+</body></html>
