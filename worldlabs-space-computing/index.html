@@ -53,3 +53,58 @@ footer{padding:34px 0 50px;color:#7c8b93;font-size:11px;border-top:1px solid var
     <h1>从“看见地球”走向<br><em>“理解并模拟世界”</em></h1>
     <div class="sub">李飞飞 / World Labs 的空间智能路线，与中国太空算力、地球基础模型、在轨智能和“实时数智地球”之间，究竟有哪些可以被验证的真实结合点。</div>
     <div class="meta"><span class="pill">公开资料核验</span><span class="pill">Fact / Synthesis / Hypothesis 分层</span><span class="pill">重点：技术 × 商业 × 数据 × 地缘 × 政策</span></div>
+  </div>
+  <div class="credit">底图：NASA Earth Observatory / ISS Earth observation</div>
+</section>
+
+<main class="main"><div class="wrap">
+  <div class="lead-grid">
+    <article class="panel summary">
+      <h2>先看结论</h2>
+      <div class="judgments">
+        <div class="judgment"><b>01｜World Labs 当前最强的是“空间重建 + 时空模拟”，还不是遥感世界模型。</b><p>Atlas 原生理解图像、视频、相机位姿与三维深度；已公开的强项是稀疏视角三维重建、显式三维输出和 Real-to-Sim（现实到仿真）。</p></div>
+        <div class="judgment"><b>02｜与太空算力最硬的结合点只有少数几个。</b><p>当前最值得验证的是“多视角光学遥感 + 精确成像几何 → 可验证三维场景”，以及“全球地球语义模型筛选 → 局部世界模型重建”。不建议把“Atlas 直接上星”当作核心叙事。</p></div>
+        <div class="judgment"><b>03｜最现实的合作不是战略联盟，而是技术基准测试。</b><p>先用海外非敏感区域、权属清晰的多视角影像做 10–20 个场景测试，只看几何精度、完整性、幻觉率、计算时间和单位成本。验证过关后再谈 API、联合开发或行业解决方案。</p></div>
+      </div>
+    </article>
+    <aside class="panel scope"><h3>本材料的边界</h3><p>目标中国公司在本文中统一称为“目标公司”，不出现具体名称。其能力只采用公开规划中可核验的部分：太空人工智能基础设施、模型上天、算力上天、互联互通、在轨感知—计算—决策、分钟级重访、“实时数智地球”等。</p><div class="small">特别说明：集团/生态内已有的地球基础模型、遥感数据和星载大模型能力，不等于目标公司已经独立拥有全部能力。本文将“已公开实现”“集团生态能力”“公司规划”严格区分。</div></aside>
+  </div>
+
+  <section id="s1">
+    <div class="section-head"><div><div class="num">01 · 李飞飞 / WORLD LABS</div><h2>她到底在做什么</h2></div><p>核心不是“做一个更会生成视频的模型”，而是让人工智能获得对三维空间、物体关系和物理世界变化的内部表示。</p></div>
+    <article class="panel profile">
+      <div class="portrait"><div class="caption">图片：Stanford HAI</div></div>
+      <div class="profile-body">
+        <span class="tag fact">FACT｜已公开</span>
+        <h3>从计算机视觉，走向“空间智能”</h3>
+        <p>World Labs 将自身定位为“空间智能公司”。其目标是构建能够感知、生成、推理并最终与虚拟和物理世界交互的世界模型。2026 年 9 月发布的 Atlas，是其新一代全模态世界模型。</p>
+        <div class="trinity">
+          <div class="tri"><div class="t">渲染器 Renderer</div><b>生成观测</b><p>给定条件和视角，生成“从这里看，世界长什么样”。</p></div>
+          <div class="tri"><div class="t">模拟器 Simulator</div><b>生成世界状态</b><p>理解空间结构与时间变化，回答“世界会怎样演化”。</p></div>
+          <div class="tri"><div class="t">规划器 Planner</div><b>输出行动</b><p>基于观察和目标决定下一步动作，闭合感知—行动回路。</p></div>
+        </div>
+      </div>
+    </article>
+    <div class="atlas">
+      <article class="panel box"><span class="tag fact">ATLAS｜公开能力</span><h4>Atlas 当前可确认的技术能力</h4><ul class="clean-list"><li>原生处理文字、图像、视频序列、相机位姿和三维深度。</li><li>从 1 张到数十张稀疏视角图像进行真实场景三维重建。</li><li>输出点云与 3D Gaussian Splat（三维高斯泼溅）等显式三维表示。</li><li>进行 Space-Time Simulation（时空模拟），并支持 Real-to-Sim（现实到仿真）的机器人工作流。</li><li>架构为多模态自回归扩散 Transformer（多模态序列 + 扩散生成 + Transformer）。</li></ul></article>
+      <article class="panel box boundary"><span class="tag unknown">边界｜不要过度外推</span><h4><strong>当前没有公开证据证明</strong></h4><ul class="clean-list"><li>Atlas 原生支持 SAR（合成孔径雷达）、高光谱或多光谱遥感数据。</li><li>Atlas 已经用于真实卫星遥感生产任务。</li><li>Atlas 可直接部署在普通星载计算机上。</li><li>Atlas 已经能承担星座级自主规划和任务调度。</li><li>World Labs 已提供中国境内私有化部署。</li></ul></article>
+    </div>
+  </section>
+
+  <section id="s2">
+    <div class="section-head"><div><div class="num">02 · HARD FIT</div><h2>与太空算力真正站得住的三个结合点</h2></div><p>以下只保留能够从双方公开技术接口推导出的结合点；每个结合点都给出“为什么成立”和“哪里可能不成立”。</p></div>
+    <div class="hardpoints">
+      <article class="panel hard"><div class="kicker">结合点 01｜最直接</div><h3>多视角卫星光学影像<br>→ 可验证三维场景</h3><p>Atlas 原生接受图像 + 相机位姿，并公开展示稀疏视角三维重建。遥感系统天然掌握轨道、姿态、相机模型和多时相/多视角影像。</p><div class="logic"><b>技术接口</b><br>多视角光学影像 + 轨道/姿态 + 相机内参 + DEM（数字高程模型） → 坐标/相机位姿适配 → Atlas → 点云 / 三维高斯场景</div><div class="why"><b>价值</b><p>把“二维观测”向“局部三维世界状态”推进，适合灾区、港口、矿山、能源基础设施、工业园区等有限区域。</p><span class="rank">优先验证：高</span></div></article>
+      <article class="panel hard"><div class="kicker">结合点 02｜架构价值最高</div><h3>全球地球语义理解<br>→ 局部空间重建</h3><p>目标公司所在生态已经形成“地球基础模型 + 视觉基础模型 + 地球嵌入向量库”的地球智能底座；它负责全球尺度的状态表达和变化发现，而 Atlas 更适合有限区域的空间重建。</p><div class="logic"><b>系统分工</b><br>全球遥感 → 地球基础模型筛选“哪里值得看” → 调用世界模型重建“这个地方的三维环境是什么”</div><div class="why"><b>价值</b><p>避免对全球海量遥感数据做高成本三维生成，把重型计算聚焦到高价值区域，更接近可行的计算经济性。</p><span class="rank">优先验证：高</span></div></article>
+      <article class="panel hard"><div class="kicker">结合点 03｜场景闭环</div><h3>卫星发现问题<br>→ 现实到仿真</h3><p>World Labs 已明确推进 Real-to-Sim-to-Real（现实→仿真→现实）路线。卫星适合广域发现，无人机/地面传感器适合局部补充，世界模型负责构建可交互仿真环境。</p><div class="logic"><b>场景链路</b><br>卫星发现变化 → 无人机/地面设备补拍 → 世界模型构造三维仿真 → 机器人/无人机训练、规划和验证</div><div class="why"><b>价值</b><p>灾害救援、能源设施、矿山、港口等场景可形成“发现—重建—仿真—行动”链路，但卫星数据本身通常不足以支撑高精度仿真。</p><span class="rank">优先验证：中</span></div></article>
+    </div>
+    <div class="visual-pair">
+      <figure class="panel image-card"><img src="https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2025/07/phsat-2_view_of_port_said_egypt/26798384-1-eng-GB/Phsat-2_view_of_Port_Said_Egypt_pillars.jpg" alt="ESA Φsat-2 对地观测影像"/><figcaption class="cap">真实遥感数据并不天然等于“世界状态”。图为 ESA Φsat-2 对 Port Said 的观测；其星上 AI 已用于云筛选、船舶等任务。图片：ESA。</figcaption></figure>
+      <figure class="panel image-card diagram"><img src="https://lh3.googleusercontent.com/1fL__KRDBJYACpABdB9ZEhVir8fUmDwc2HHN-_tHlzBHG8HreW1_jtnkrTJ9H95J_qlrqBouWtET3pQzhw4davAYV3qj0UlZ0smZ2kChHyjP4usE%3Dw1440" alt="AlphaEarth 全球地理嵌入示意"/><figcaption class="cap">AlphaEarth Foundations 将全球多源观测压缩成 64 维地理空间嵌入，代表“全球状态表征”这条路线。图片：Google DeepMind。</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><div><div class="num">03 · VALUE EXCHANGE</div><h2>为什么 World Labs 也可能需要这种合作</h2></div><p>合作不能只回答“我们想用 Atlas”，还要回答目标公司能给对方什么稀缺资源。</p></div>
+    <table class="value-table"><thead><tr><th>目标公司/生态可提供</th><th>对 World Labs 的潜在价值</th><th>需要验证的核心问题</th></tr></thead><tbody>
+      <tr><td>稀疏、多视角卫星光学影像</td><td>把三维重建从地面/手机场景推进到超远距离、超大尺度的观测条件。</td><td>Atlas 是否能在卫星视角下保持几何稳定，而不是只生成“视觉合理”的场景。</td></tr>
