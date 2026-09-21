@@ -108,3 +108,58 @@ footer{padding:34px 0 50px;color:#7c8b93;font-size:11px;border-top:1px solid var
     <div class="section-head"><div><div class="num">03 · VALUE EXCHANGE</div><h2>为什么 World Labs 也可能需要这种合作</h2></div><p>合作不能只回答“我们想用 Atlas”，还要回答目标公司能给对方什么稀缺资源。</p></div>
     <table class="value-table"><thead><tr><th>目标公司/生态可提供</th><th>对 World Labs 的潜在价值</th><th>需要验证的核心问题</th></tr></thead><tbody>
       <tr><td>稀疏、多视角卫星光学影像</td><td>把三维重建从地面/手机场景推进到超远距离、超大尺度的观测条件。</td><td>Atlas 是否能在卫星视角下保持几何稳定，而不是只生成“视觉合理”的场景。</td></tr>
+      <tr><td>精确轨道、姿态与相机参数</td><td>提供高质量几何约束，正好对应 Atlas 原生相机位姿接口。</td><td>坐标系、相机模型和地理坐标怎样进入 Atlas 空间上下文。</td></tr>
+      <tr><td>多时相遥感数据</td><td>测试同一区域跨时间的一致性与变化建模，为“世界随时间演化”提供真实数据。</td><td>是否能区分真实变化与生成漂移。</td></tr>
+      <tr><td>全球地球语义模型</td><td>补足“全球哪里值得重建”的上游筛选层，避免 Atlas 直接承担全地球检索任务。</td><td>语义嵌入怎样触发局部世界模型调用。</td></tr>
+      <tr><td>星上计算与在轨智能场景</td><td>为 World Labs 提供一种极端边缘环境：算力、功耗、带宽、时延都受强约束。</td><td>哪些 Encoder（编码器）/Task Head（任务头）能被压缩，而不要求整套 Atlas 上星。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section id="s3">
+    <div class="section-head"><div><div class="num">04 · COOPERATION</div><h2>可能的合作模式</h2></div><p>建议从低风险、可证伪的技术合作开始，再逐级增加商业与资本绑定。</p></div>
+    <div class="modes">
+      <article class="panel mode rec"><div class="n">01</div><h4>联合基准测试</h4><p>用海外非敏感、多视角卫星影像验证三维重建。当前最推荐，成本低、信息增益最高。</p></article>
+      <article class="panel mode"><div class="n">02</div><h4>Atlas 早期访问 / API</h4><p>申请精选合作伙伴，使用 World API（世界模型应用程序接口）或未来 Atlas 接口集成。</p></article>
+      <article class="panel mode"><div class="n">03</div><h4>地理空间适配层</h4><p>联合开发相机几何、DEM、地理坐标、遥感元数据到世界模型空间上下文的适配。</p></article>
+      <article class="panel mode"><div class="n">04</div><h4>行业联合方案</h4><p>面向灾害、矿山、能源、港口等形成“广域发现 + 局部三维 + 仿真”的行业产品。</p></article>
+    </div>
+    <div class="thesis panel" style="margin-top:16px"><h3>当前不建议把“Atlas 直接上星”或“股权/JV（合资）”作为起点。</h3><p>Atlas 仍是前沿大模型且处于早期访问阶段；上星涉及算力、显存、功耗、模型权重和出口控制等多重问题。股权/JV 会把本可通过 PoC（概念验证）解决的技术不确定性，提前升级为地缘、投资审查和治理问题。</p></div>
+  </section>
+
+  <section id="s4">
+    <div class="section-head"><div><div class="num">05 · ACCESS & RISK</div><h2>触达路径与全量约束</h2></div><p>这里的关键不是“能不能联系到李飞飞”，而是用什么合作命题进入 World Labs 内部，同时避免一开始触发高敏感度审查。</p></div>
+    <div class="route">
+      <article class="panel route-card"><h3>建议触达路径</h3><div class="steps">
+        <div class="step"><div><b>产品/研究团队：用 Benchmark（基准测试）命题敲门</b><p>直接申请 Atlas 早期访问，题目限定为“卫星多视角光学影像 + 精确成像几何 → 三维重建”。</p></div></div>
+        <div class="step"><div><b>生态引荐：从技术伙伴而非资本伙伴切入</b><p>优先通过双方已有的芯片、云、机器人、三维工具链等生态联系做研究型引荐。</p></div></div>
+        <div class="step"><div><b>企业协议：验证后再谈数据、IP 与商业条款</b><p>重点谈“不用于训练”、数据保留/删除、输出权属、地域限制和出口合规。</p></div></div>
+        <div class="step"><div><b>商业方案：只在指标过关后进入</b><p>先证明客户愿意为“三维状态/仿真结果”付钱，再谈联合行业方案或长期绑定。</p></div></div>
+      </div></article>
+      <article class="panel route-card"><h3>风险与影响因素</h3><div class="risk-grid">
+        <div class="risk"><div class="risk-top"><b>遥感数据出境</b><span class="level high">高</span></div><p>中国境内观测遥感数据未经授权不得向境外组织或个人提供；商业遥感活动亦参照相关规则管理。</p></div>
+        <div class="risk"><div class="risk-top"><b>训练与数据二次使用</b><span class="level high">高</span></div><p>World Labs 现行条款允许使用用户内容改进/训练模型；付费用户可前瞻性退出，但需要企业合同重新约定。</p></div>
+        <div class="risk"><div class="risk-top"><b>双用途属性</b><span class="level high">高</span></div><p>遥感、卫星自主决策和高精度空间重建具有明显军民两用属性，使用场景决定审查强度。</p></div>
+        <div class="risk"><div class="risk-top"><b>美国出口控制</b><span class="level high">高</span></div><p>越靠近模型权重、先进算力、训练基础设施和敏感最终用途，合规复杂度越高。</p></div>
+        <div class="risk"><div class="risk-top"><b>中国一般数据跨境</b><span class="level med">中</span></div><p>重要数据、个人信息等仍需按数据出境规则履行相应义务；与遥感专门规则叠加考虑。</p></div>
+        <div class="risk"><div class="risk-top"><b>模型私有部署能力</b><span class="level med">中</span></div><p>当前公开资料未证明 World Labs 提供中国境内私有部署，这会影响敏感数据可用性。</p></div>
+        <div class="risk"><div class="risk-top"><b>商业 ROI</b><span class="level med">中</span></div><p>三维世界模型计算成本高，若输出只是“更好看的三维场景”，无法支撑高价值 B2B 付费。</p></div>
+        <div class="risk"><div class="risk-top"><b>技术匹配度</b><span class="level med">中</span></div><p>光学影像结合点最强；SAR/高光谱/多光谱目前缺少公开接口证据。</p></div>
+        <div class="risk"><div class="risk-top"><b>API/PoC 合作</b><span class="level low">相对低</span></div><p>使用海外非敏感数据、限制用途、只做地面端测试，可显著降低初期政策和地缘摩擦。</p></div>
+        <div class="risk"><div class="risk-top"><b>股权/JV</b><span class="level high">高</span></div><p>会叠加外资审查、对外投资/国家安全审查、治理和长期地缘不确定性，不适合作为第一步。</p></div>
+      </div></article>
+    </div>
+  </section>
+
+  <section id="s5">
+    <div class="section-head"><div><div class="num">06 · BEYOND WORLD LABS</div><h2>从 World Labs 扩展到“世界模型 × 太空算力”</h2></div><p>地理空间基础模型不等于世界模型，但已经形成从“表征世界”走向“理解、预测、行动”的技术阶梯。</p></div>
+    <div class="flow panel">
+      <svg viewBox="0 0 1180 310" role="img" aria-label="世界模型与太空算力演进链路">
+        <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#e6f3ef"/><stop offset="1" stop-color="#f7fafb"/></linearGradient><filter id="sh"><feDropShadow dx="0" dy="7" stdDeviation="10" flood-opacity=".08"/></filter></defs>
+        <rect x="25" y="58" width="205" height="188" rx="20" fill="url(#g1)" stroke="#c9ddd6" filter="url(#sh)"/><text x="48" y="94" font-size="13" fill="#0d6b57" font-weight="700">L1 世界状态表征</text><text x="48" y="126" font-size="21" fill="#152027" font-weight="800">全球地球嵌入</text><text x="48" y="158" font-size="13" fill="#5f6d75">AlphaEarth / 地球基础模型</text><text x="48" y="187" font-size="12" fill="#5f6d75">多源数据 → 统一语义特征</text>
+        <rect x="258" y="58" width="205" height="188" rx="20" fill="#fff" stroke="#dbe3e8" filter="url(#sh)"/><text x="281" y="94" font-size="13" fill="#0d6b57" font-weight="700">L2 基础模型上星</text><text x="281" y="126" font-size="21" fill="#152027" font-weight="800">在轨理解数据</text><text x="281" y="158" font-size="13" fill="#5f6d75">Prithvi / Φsat-2</text><text x="281" y="187" font-size="12" fill="#5f6d75">减少下传 · 提升时效</text>
+        <rect x="491" y="58" width="205" height="188" rx="20" fill="#fff" stroke="#dbe3e8" filter="url(#sh)"/><text x="514" y="94" font-size="13" fill="#0d6b57" font-weight="700">L3 闭环自主决策</text><text x="514" y="126" font-size="21" fill="#152027" font-weight="800">看见 → 决定再看哪里</text><text x="514" y="158" font-size="13" fill="#5f6d75">NASA Dynamic Targeting</text><text x="514" y="187" font-size="12" fill="#5f6d75">在轨判断 · 重定向传感器</text>
+        <rect x="724" y="58" width="205" height="188" rx="20" fill="#fff" stroke="#dbe3e8" filter="url(#sh)"/><text x="747" y="94" font-size="13" fill="#0d6b57" font-weight="700">L4 空间世界模型</text><text x="747" y="126" font-size="21" fill="#152027" font-weight="800">局部三维世界状态</text><text x="747" y="158" font-size="13" fill="#5f6d75">Atlas 等潜在路线</text><text x="747" y="187" font-size="12" fill="#9c3c36">尚无明确卫星遥感验证</text>
+        <rect x="957" y="58" width="198" height="188" rx="20" fill="#0e594c" stroke="#0e594c" filter="url(#sh)"/><text x="980" y="94" font-size="13" fill="#b8e5d9" font-weight="700">L5 世界模型闭环</text><text x="980" y="126" font-size="21" fill="#fff" font-weight="800">预测 → 规划 → 调度</text><text x="980" y="158" font-size="13" fill="#d9eeea">未来星座智能</text><text x="980" y="187" font-size="12" fill="#c5ddd8">长期方向 · 尚未成熟</text>
+        <path d="M230 152 H250 M463 152 H483 M696 152 H716 M929 152 H949" stroke="#7ba89b" stroke-width="2.5" stroke-dasharray="4 5"/>
+      </svg>
+      <div class="flow-caption">这条链路里，L1–L3 已经有公开案例；L4–L5 才是真正意义上世界模型开始进入太空系统的部分。</div>
